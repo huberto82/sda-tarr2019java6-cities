@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Klasa pokazuje przykład kodu, którego nie można powtórnie wykorzystać, metoda main robi
+ * wszystko, bez podziału na metody i klas, których odpowiedzialność jest ograniczona
+ */
 public class SimpleCitiesApp {
     static private List<City> cities;
     public static void main(String[] args) throws IOException {
