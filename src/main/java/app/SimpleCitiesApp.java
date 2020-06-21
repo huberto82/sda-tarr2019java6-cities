@@ -40,7 +40,6 @@ public class SimpleCitiesApp {
         cities.stream().filter(city -> city.getName().equals("Toruń")).forEach(System.out::println);
         //Wyświetl polskie miasta zaczynajace się na literę T
         cities.stream().filter(city -> city.getCountryCode().equals("PL") && city.getName().startsWith("T")).forEach(System.out::println);
-
           //rozwlekły zapis operacji na strumieniu
 //        Stream<String> li = Files.lines(path).map(line -> line);
 //        Stream<String> fl = li.filter(l -> l!= null);
