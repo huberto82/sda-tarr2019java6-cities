@@ -2,7 +2,6 @@ package dao;
 
 import mapper.CityMapper;
 import model.City;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,17 +16,26 @@ public class CityDaoFile implements CityDao{
 
     public CityDaoFile(String filePath) throws IOException {
         Path path = Paths.get(filePath);
+
+        //Wykorzystanie metody mappera zwracającej null w przypadku niepoprawnego łańcucha opisującego miasto
+//        cities = Files.lines(path)
+//                .map(CityMapper::mapFromGeonames)
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
+
+        //Wykorzystanie metody mappera zwracającej Optional
         cities = Files.lines(path)
-                .map(CityMapper::mapFromGeonames)
-                .filter(Objects::nonNull)
+                .map(CityMapper::mapFromGeonamesOptional)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<City> findAll() {
-        //to tworzy kopię kolekcji ale jest kiepskie wydajnościowo
+        //to tworzy kopię kolekcji, ale jest kiepskie wydajnościowo
         //return cities.stream().collect(Collectors.toList());
-        //to jest ok pod wzlędem wydajności, ale udostępniamy kolekcję na zewnątrz, i ktoś może ją wyczyścić!!!
+        //to jest ok pod względem wydajności, ale udostępniamy kolekcję na zewnątrz, i ktoś może ją wyczyścić!!!
         return cities;
     }
 
@@ -40,7 +48,6 @@ public class CityDaoFile implements CityDao{
 //            }
 //        }
 //        return Optional.empty();
-
         return cities.stream().filter(city -> city.getId() == id).findAny();
     }
 }
